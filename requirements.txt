@@ -1,0 +1,9 @@
+langchain=1.1.3
+langchain-community=0.4.1
+langchain_openai=1.1.3
+langchain-mcp-adapters=0.2.1
+dashscope=1.25.3
+
+gradio=6.1.0
+python-dotenv=1.2.1
+anyio=4.12.0

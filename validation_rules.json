@@ -1,0 +1,218 @@
+{
+  "rules": [
+    {
+      "id": "allowed_types",
+      "name": "允许的数据类型",
+      "description": "属性类型只能使用Text、Integer和Float",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "allowed_types": [
+          "Text",
+          "Integer",
+          "Float"
+        ]
+      }
+    },
+    {
+      "id": "entity_naming",
+      "name": "实体命名规范",
+      "description": "实体名称必须是英文且符合PascalCase规范",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "pattern": "^[A-Z][a-zA-Z0-9]*$"
+      }
+    },
+    {
+      "id": "property_naming",
+      "name": "属性命名规范",
+      "description": "属性名称必须是英文且符合camelCase规范",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "pattern": "^[a-z][a-zA-Z0-9]*$"
+      }
+    },
+    {
+      "id": "chinese_names",
+      "name": "中文名称要求",
+      "description": "实体和属性必须包含中文名称",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "require_chinese": true
+      }
+    },
+    {
+      "id": "relation_naming",
+      "name": "关系命名规范",
+      "description": "关系名称必须是英文且符合camelCase规范",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "pattern": "^[a-z][a-zA-Z0-9]*$"
+      }
+    },
+    {
+      "id": "numeric_types",
+      "name": "数值类型检查",
+      "description": "数值相关属性必须使用Float或Integer类型",
+      "enabled": true,
+      "severity": "warning",
+      "config": {
+        "numeric_keywords": [
+          "amount",
+          "price",
+          "金额",
+          "价格",
+          "quantity",
+          "数量",
+          "cost",
+          "费用",
+          "比例",
+          "budget",
+          "预算",
+          "size",
+          "人数",
+          "count",
+          "total",
+          "合计"
+        ]
+      }
+    },
+    {
+      "id": "date_types",
+      "name": "日期类型检查",
+      "description": "日期相关属性必须使用Date或Text类型",
+      "enabled": true,
+      "severity": "warning",
+      "config": {
+        "date_keywords": [
+          "date",
+          "time",
+          "日期",
+          "时间"
+        ]
+      }
+    },
+    {
+      "id": "required_entities",
+      "name": "必需的实体",
+      "description": "Schema必须包含指定的实体类型",
+      "enabled": false,
+      "severity": "error",
+      "config": {
+        "required": []
+      }
+    },
+    {
+      "id": "property_count",
+      "name": "属性数量限制",
+      "description": "限制每个实体的属性数量",
+      "enabled": false,
+      "severity": "warning",
+      "config": {
+        "min": 1,
+        "max": 20
+      }
+    },
+    {
+      "id": "namespace_pattern",
+      "name": "命名空间规则",
+      "description": "命名空间必须符合特定模式",
+      "enabled": false,
+      "severity": "warning",
+      "config": {
+        "pattern": ".*",
+        "allowed": []
+      }
+    },
+    {
+      "id": "no_id_property",
+      "name": "禁止id属性",
+      "description": "不应该生成名为id的属性",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "forbidden_names": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": "no_constraint",
+      "name": "禁止constraint字段",
+      "description": "Schema中不应包含constraint: SingleValue",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "check_text": true
+      }
+    },
+    {
+      "id": "required_base_properties",
+      "name": "必需的基础属性",
+      "description": "每个实体必须包含名称属性(xxxName格式)和description属性",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "required_properties": [
+          {
+            "pattern": "^[a-z][a-zA-Z0-9]*Name$",
+            "description": "实体必须有名称属性(如projectName、personName等xxxName格式)"
+          },
+          {
+            "pattern": "^description$",
+            "description": "实体必须有description属性"
+          }
+        ]
+      }
+    },
+    {
+      "id": "relations_only_when_needed",
+      "name": "关系部分按需显示",
+      "description": "只有当实体真正有关系时才应包含relations部分，无关系的实体不应显示空的relations",
+      "enabled": true,
+      "severity": "warning",
+      "config": {
+        "check_empty_relations": true,
+        "message": "实体没有关系时不应包含relations部分"
+      }
+    },
+    {
+      "id": "no_underscore",
+      "name": "禁止下划线命名",
+      "description": "实体名、属性名、关系名不能包含下划线",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "pattern": "^[a-zA-Z][a-zA-Z0-9]*$",
+        "message": "实体名、属性名、关系名不能包含下划线，请使用camelCase或PascalCase命名"
+      }
+    },
+    {
+      "id": "no_duplicate_entity_definition",
+      "name": "禁止重复定义实体",
+      "description": "同一个实体的properties和relations必须写在一起，不能分开定义",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "message": "实体被重复定义，properties和relations必须写在同一个实体定义块中"
+      }
+    },
+    {
+      "id": "no_special_characters_in_names",
+      "name": "禁止名称包含特殊字符",
+      "description": "实体名称（中英文）不能包含特殊字符如/、\\、|等，例如'合同/主合同'是错误的，应该是'合同'或'主合同'",
+      "enabled": true,
+      "severity": "error",
+      "config": {
+        "forbidden_chars": ["/", "\\", "|", "(", ")", "[", "]", "{", "}", "<", ">", ":", ";", ",", ".", "?", "!", "@", "#", "$", "%", "^", "&", "*", "+", "=", "~", "`", "'", "\""],
+        "message": "名称不能包含特殊字符，如需表示多个概念请分别定义为独立实体"
+      }
+    }
+  ],
+  "version": "1.2.0",
+  "last_modified": "2025-12-13"
+}

@@ -1,0 +1,62 @@
+namespace Legal
+
+ReviewOpinion(审查意见书): EntityType
+    properties:
+        reviewopinionName(审查意见书名称): Text
+        description(描述): Text
+        documentNumber(文件编号): Text
+        reviewDate(出具日期): Text
+        reviewer(审查部门/人): Text
+        reviewPurpose(审查目的): Text
+    relations:
+        identifiesRiskIn(在...中识别风险): ReviewedDocument
+        basedOn(基于): LegalBasis
+
+ReviewedDocument(被审查文件): EntityType
+    properties:
+        revieweddocumentName(被审查文件名称): Text
+        description(描述): Text
+    relations:
+        containsClause(包含条款): ContractClause
+        hasPart(包含部分): SignatoryPage
+        describes(描述): SubjectInformation
+
+ContractClause(合同条款): EntityType
+    properties:
+        contractclauseName(合同条款名称): Text
+        description(描述): Text
+        clauseTitle(条款标题): Text
+        clauseContent(条款内容): Text
+    relations:
+        posesRisk(构成风险): LegalRisk
+        governsOwnershipOf(规定...的归属): IntellectualProperty
+
+LegalRisk(法律风险): EntityType
+    properties:
+        legalriskName(法律风险名称): Text
+        description(描述): Text
+        riskDescription(风险描述): Text
+
+IntellectualProperty(知识产权): EntityType
+    properties:
+        intellectualpropertyName(知识产权名称): Text
+        description(描述): Text
+        ipType(知识产权类型): Text
+
+LegalBasis(法律依据): EntityType
+    properties:
+        legalbasisName(法律依据名称): Text
+        description(描述): Text
+        basisName(依据名称): Text
+
+SignatoryPage(签章页): EntityType
+    properties:
+        signatorypageName(签章页名称): Text
+        description(描述): Text
+
+SubjectInformation(主体信息): EntityType
+    properties:
+        subjectinformationName(主体信息名称): Text
+        description(描述): Text
+        subjectName(主体名称): Text
+        subjectAddress(主体地址): Text

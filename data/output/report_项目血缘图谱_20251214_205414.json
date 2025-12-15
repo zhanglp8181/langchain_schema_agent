@@ -1,0 +1,264 @@
+{
+  "domain": "项目管理",
+  "sub_domain": "企业数字化转型项目管理",
+  "keywords": [
+    "项目名称",
+    "项目编号",
+    "项目层级",
+    "上级项目",
+    "客户名称",
+    "供应商名称",
+    "内部客户",
+    "外部客户",
+    "数字化转型",
+    "派单",
+    "项目所属公司"
+  ],
+  "entities": [
+    {
+      "name": "Project",
+      "cn_name": "项目",
+      "description": "企业数字化转型项目，是业务执行的核心单元。具有唯一的项目编号和名称，并归属于特定的公司。",
+      "confidence": 1.0,
+      "evidence": [
+        "项目名称",
+        "项目编号",
+        "项目层级",
+        "项目所属公司",
+        "上级项目名",
+        "上级项目ID"
+      ]
+    },
+    {
+      "name": "Customer",
+      "cn_name": "客户",
+      "description": "项目的需求方或服务购买方。分为内部客户和外部客户，是项目的发起源头。",
+      "confidence": 1.0,
+      "evidence": [
+        "客户名称",
+        "内外部客户属性",
+        "自然客户ID"
+      ]
+    },
+    {
+      "name": "Supplier",
+      "cn_name": "供应商",
+      "description": "为项目提供资源、产品或服务的组织。分为内部供应商和外部供应商。",
+      "confidence": 1.0,
+      "evidence": [
+        "供应商名称",
+        "内外部供应商属性"
+      ]
+    },
+    {
+      "name": "Company",
+      "cn_name": "公司",
+      "description": "项目或供应商所属的组织实体，是项目管理和资源归属的责任主体。",
+      "confidence": 0.95,
+      "evidence": [
+        "项目所属公司",
+        "供应商名称中包含‘江苏数科分’、‘江苏运营公司’等公司名"
+      ]
+    },
+    {
+      "name": "ClauseCustomer",
+      "cn_name": "条款客户",
+      "description": "在合同或条款层面定义的客户，可能与项目直接客户不同，用于财务或法务层面的管理。",
+      "confidence": 0.9,
+      "evidence": [
+        "条款客户"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "name": "hasParentProject",
+      "cn_name": "有上级项目",
+      "source": "Project",
+      "target": "Project",
+      "description": "表示项目之间的层级关系，下级项目由上级项目分解或派单产生。",
+      "confidence": 1.0,
+      "evidence": [
+        "上级项目名",
+        "上级项目ID",
+        "项目层级为2的项目其上级项目名和ID非空"
+      ]
+    },
+    {
+      "name": "belongsToCustomer",
+      "cn_name": "归属于客户",
+      "source": "Project",
+      "target": "Customer",
+      "description": "项目是为特定客户服务的，客户是项目的需求来源和所有者。",
+      "confidence": 1.0,
+      "evidence": [
+        "项目记录中均包含客户名称、客户类型等字段"
+      ]
+    },
+    {
+      "name": "involvesSupplier",
+      "cn_name": "涉及供应商",
+      "source": "Project",
+      "target": "Supplier",
+      "description": "项目在执行过程中会使用一个或多个供应商提供的资源或服务。",
+      "confidence": 1.0,
+      "evidence": [
+        "每条项目记录都关联一个供应商名称和类型"
+      ]
+    },
+    {
+      "name": "ownedByCompany",
+      "cn_name": "由公司拥有",
+      "source": "Project",
+      "target": "Company",
+      "description": "项目由特定的公司负责管理和运营，该公司是项目的责任主体。",
+      "confidence": 0.95,
+      "evidence": [
+        "项目所属公司字段明确指出了项目归属"
+      ]
+    },
+    {
+      "name": "affiliatedWithCompany",
+      "cn_name": "隶属于公司",
+      "source": "Supplier",
+      "target": "Company",
+      "description": "供应商（尤其是内部供应商）是某个公司的一部分或由其管理。",
+      "confidence": 0.9,
+      "evidence": [
+        "内部供应商名称如‘Z9225D55WW5970-层级1-内部供应商-江苏数科分’包含了公司名‘江苏数科分’"
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "name": "projectName",
+      "cn_name": "项目名称",
+      "entity": "Project",
+      "data_type": "Text",
+      "example": "江苏省南京市鑫洋永磁有限责任公司数字化转型项目",
+      "description": "项目的具体名称，通常描述项目内容和客户。"
+    },
+    {
+      "name": "projectId",
+      "cn_name": "项目编号",
+      "entity": "Project",
+      "data_type": "Text",
+      "example": "Z9225D55WW5970",
+      "description": "项目的唯一标识符。"
+    },
+    {
+      "name": "projectLevel",
+      "cn_name": "项目层级",
+      "entity": "Project",
+      "data_type": "Integer",
+      "example": "1",
+      "description": "表示项目在整体项目分解结构中的层级，如1级为总项目，2级为派生子项目。"
+    },
+    {
+      "name": "customerName",
+      "cn_name": "客户名称",
+      "entity": "Customer",
+      "data_type": "Text",
+      "example": "中国联合网络通信有限公司",
+      "description": "客户的法定或常用名称。"
+    },
+    {
+      "name": "customerType",
+      "cn_name": "客户类型",
+      "entity": "Customer",
+      "data_type": "Text",
+      "example": "内部客户",
+      "description": "标识客户是组织内部的（内部客户）还是外部的（外部客户）。"
+    },
+    {
+      "name": "natureCustomerId",
+      "cn_name": "自然客户ID",
+      "entity": "Customer",
+      "data_type": "Text",
+      "example": "123",
+      "description": "客户在系统或主数据中的唯一标识。"
+    },
+    {
+      "name": "supplierName",
+      "cn_name": "供应商名称",
+      "entity": "Supplier",
+      "data_type": "Text",
+      "example": "Z9225D55WW5970-层级1-外部供应商1",
+      "description": "供应商的名称或标识。"
+    },
+    {
+      "name": "supplierType",
+      "cn_name": "供应商类型",
+      "entity": "Supplier",
+      "data_type": "Text",
+      "example": "外部供应商",
+      "description": "标识供应商是组织内部的（内部供应商）还是外部的（外部供应商）。"
+    },
+    {
+      "name": "owningCompany",
+      "cn_name": "所属公司",
+      "entity": "Company",
+      "data_type": "Text",
+      "example": "数科总部",
+      "description": "公司实体的名称。"
+    },
+    {
+      "name": "clauseCustomer",
+      "cn_name": "条款客户",
+      "entity": "ClauseCustomer",
+      "data_type": "Text",
+      "example": "数科总部",
+      "description": "在合同条款中约定的客户方，可能与项目直接客户不同。"
+    }
+  ],
+  "inferred_entities": [
+    {
+      "name": "ProjectManager",
+      "reason": "项目管理是核心活动，必然涉及项目经理或管理团队的角色来负责项目的规划、执行和交付。文档中提到了项目所属公司，但未明确管理责任人。",
+      "suggestion": "查阅项目章程、RACI矩阵或项目人员分配表，确认是否存在‘项目经理’、‘项目负责人’或‘项目成员’等实体及属性。"
+    },
+    {
+      "name": "Contract",
+      "reason": "项目（尤其是涉及外部客户和供应商）的开展通常基于合同或协议。文档中出现了‘条款客户’，暗示了合同层面的管理。",
+      "suggestion": "检查是否有独立的合同管理模块或数据表，包含合同编号、金额、签订日期、关联项目ID等字段。"
+    },
+    {
+      "name": "WorkPackage",
+      "cn_name": "工作包",
+      "reason": "项目层级（如层级1、层级2）和派单行为（如‘派单给’）暗示了工作分解结构（WBS）的存在。‘工作包’是比‘项目’更细粒度的任务单元。",
+      "suggestion": "分析项目计划或任务清单数据，确认是否存在代表具体交付物或任务、且具有独立编号和工时的‘工作包’实体。"
+    }
+  ],
+  "inferred_relations": [
+    {
+      "name": "assignedTo",
+      "source": "Project",
+      "target": "ProjectManager",
+      "reason": "项目需要被分配给具体的人员或团队进行管理。从管理逻辑上，每个项目都应有负责人。",
+      "suggestion": "在项目主数据或人力资源分配表中，查找‘项目经理ID’、‘负责人’等关联字段。"
+    },
+    {
+      "name": "governedBy",
+      "source": "Project",
+      "target": "Contract",
+      "reason": "项目的范围、成本和交付物通常由合同规定。‘条款客户’字段的存在强烈暗示了项目与合同的关联。",
+      "suggestion": "查找合同数据表中是否有‘关联项目编号’字段，或项目数据表中是否有‘合同编号’字段。"
+    },
+    {
+      "name": "decomposedInto",
+      "source": "Project",
+      "target": "WorkPackage",
+      "reason": "项目管理中，项目通过工作分解结构（WBS）分解为更小的工作包。文档中的项目层级和派单是这种分解关系的体现。",
+      "suggestion": "分析任务或工作包层级的数据，确认其是否通过‘父任务ID’或‘所属项目ID’与项目实体关联。"
+    },
+    {
+      "name": "providesServiceTo",
+      "source": "Company",
+      "target": "Company",
+      "reason": "文档显示‘数科总部’将项目派单给‘江苏数科分’，‘江苏数科分’或‘数科总部’又将任务派给‘江苏运营公司’。这揭示了公司间存在服务提供或内部结算关系。",
+      "suggestion": "查阅内部服务目录、结算协议或组织间关系图，确认公司实体间是否存在‘服务提供方’和‘服务接收方’的正式关系。"
+    }
+  ],
+  "confidence": 0.95,
+  "document_summary": "本文档展示了企业数字化转型项目管理中的核心数据模型。文档以表格形式呈现了项目、客户、供应商等实体及其关系，重点体现了项目层级结构（如一级项目、二级派单项目）、内外部客户与供应商的区分，以及项目在不同公司（如数科总部、江苏数科分、江苏运营公司）间的流转（派单）。数据揭示了以“数科总部”为核心，承接内外部客户的数字化转型项目，并通过内部派单机制将任务分解至下级公司执行，同时整合内外部供应商资源的协作模式。"
+}

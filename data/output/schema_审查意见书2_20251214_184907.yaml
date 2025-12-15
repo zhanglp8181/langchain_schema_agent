@@ -1,0 +1,63 @@
+namespace Legal
+
+ReviewOpinion(审查意见书): EntityType
+    properties:
+        reviewopinionName(审查意见书名称): Text
+        description(描述): Text
+        reviewNumber(审查编号): Text
+        issueDate(出具日期): Text
+        overallConclusion(总体结论): Text
+    relations:
+        reviews(审查): LegalDocument
+        basedOn(依据): ReviewBasis
+        identifies(识别): Risk
+
+LegalDocument(被审查法律文件): EntityType
+    properties:
+        legaldocumentName(被审查法律文件名称): Text
+        description(描述): Text
+        documentName(文件名称): Text
+        documentVersion(文件版本): Text
+    relations:
+        contains(包含): LegalProvision
+        involves(涉及): IntellectualProperty
+
+ReviewBasis(审查依据): EntityType
+    properties:
+        reviewbasisName(审查依据名称): Text
+        description(描述): Text
+
+LegalProvision(法律条款): EntityType
+    properties:
+        legalprovisionName(法律条款名称): Text
+        description(描述): Text
+        clauseNumber(条款序号): Text
+        clauseContent(条款内容): Text
+
+ContractParty(合同当事人): EntityType
+    properties:
+        contractpartyName(合同当事人名称): Text
+        description(描述): Text
+        partyName(当事人名称): Text
+    relations:
+        signs(签署): LegalDocument
+
+IntellectualProperty(知识产权): EntityType
+    properties:
+        intellectualpropertyName(知识产权名称): Text
+        description(描述): Text
+
+Risk(风险): EntityType
+    properties:
+        riskName(风险名称): Text
+        description(描述): Text
+        riskLevel(风险等级): Text
+
+ModificationSuggestion(修改建议): EntityType
+    properties:
+        modificationsuggestionName(修改建议名称): Text
+        description(描述): Text
+        suggestionContent(建议内容): Text
+    relations:
+        proposesFor(为...提出): LegalProvision
+        mitigates(缓解): Risk

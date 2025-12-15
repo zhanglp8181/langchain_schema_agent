@@ -1,0 +1,82 @@
+namespace Legal
+
+ReviewOpinion(审查意见书): EntityType
+    properties:
+        reviewopinionName(审查意见书名称): Text
+        description(描述): Text
+        issuingDepartment(出具部门): Text
+        issuingDate(出具日期): Text
+        reviewer(审查人): Text
+        reviewPurpose(审查目的): Text
+    relations:
+        reviews(审查): Contract
+        issuedBy(由...出具): ReviewingParty
+        identifies(识别出): LegalRisk
+        proposesFor(为...提出): ModificationSuggestion
+        basedOn(basedOn): ApplicableLaw
+
+Contract(合同): EntityType
+    properties:
+        contractName(合同名称): Text
+        description(描述): Text
+    relations:
+        submittedBy(由...提交): SubmittingParty
+        contains(包含): LegalProvision
+
+ReviewingParty(审查方): EntityType
+    properties:
+        reviewingpartyName(审查方名称): Text
+        description(描述): Text
+
+SubmittingParty(送审方): EntityType
+    properties:
+        submittingpartyName(送审方名称): Text
+        description(描述): Text
+        submittingDepartment(送审部门): Text
+    relations:
+        signsWith(signsWith): Counterparty
+
+Counterparty(合同相对方): EntityType
+    properties:
+        counterpartyName(合同相对方名称): Text
+        description(描述): Text
+
+LegalProvision(法律条款): EntityType
+    properties:
+        legalprovisionName(法律条款名称): Text
+        description(描述): Text
+        clauseContent(条款原文): Text
+
+LegalRisk(法律风险): EntityType
+    properties:
+        legalriskName(法律风险名称): Text
+        description(描述): Text
+        riskLevel(风险等级): Text
+        riskDescription(风险描述): Text
+
+ModificationSuggestion(修改建议): EntityType
+    properties:
+        modificationsuggestionName(修改建议名称): Text
+        description(描述): Text
+    relations:
+        targets(针对): LegalProvision
+        mitigates(缓解): LegalRisk
+
+ApplicableLaw(ApplicableLaw): EntityType
+    properties:
+        applicablelawName(ApplicableLaw名称): Text
+        description(描述): Text
+
+Attachment(Attachment): EntityType
+    properties:
+        attachmentName(Attachment名称): Text
+        description(描述): Text
+    relations:
+        belongsTo(belongsTo): Contract
+
+NegotiationRecord(NegotiationRecord): EntityType
+    properties:
+        negotiationrecordName(NegotiationRecord名称): Text
+        description(描述): Text
+    relations:
+        recordsOutcomeOf(recordsOutcomeOf): ModificationSuggestion

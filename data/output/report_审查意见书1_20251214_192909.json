@@ -1,0 +1,313 @@
+{
+  "domain": "法律",
+  "sub_domain": "合同审查与法律文书",
+  "keywords": [
+    "审查意见书",
+    "法律风险",
+    "条款",
+    "权利义务",
+    "知识产权归属",
+    "民法典",
+    "违约责任",
+    "不可抗力",
+    "签章页",
+    "主体信息"
+  ],
+  "entities": [
+    {
+      "name": "ReviewOpinion",
+      "cn_name": "审查意见书",
+      "description": "法律专业人士对送审文件（如合同）进行审查后出具的专业意见文书，旨在识别风险、提出修改建议。",
+      "confidence": 1.0,
+      "evidence": [
+        "# **关于《[项目/文件名称]》的审查意见书**",
+        "## **一、 审查基本情况**",
+        "## **五、 审查结论**"
+      ]
+    },
+    {
+      "name": "ReviewedDocument",
+      "cn_name": "被审查文件",
+      "description": "接受法律审查的目标文件，通常是合同、协议、说明书等法律或准法律文书。",
+      "confidence": 1.0,
+      "evidence": [
+        "*   **送审文件名称：** `[请填写被审查的具体文件名称，如：《XX项目合作协议》、《YY软件需求规格说明书》]`"
+      ]
+    },
+    {
+      "name": "ContractClause",
+      "cn_name": "合同条款",
+      "description": "构成合同或协议的基本单元，规定了各方的具体权利、义务、责任或程序。",
+      "confidence": 1.0,
+      "evidence": [
+        "**第X条【条款标题】** 中，关于“`[具体描述，如：交付标准]`”的约定较为模糊",
+        "**第Y条【条款标题】** 中，“`[具体描述，如：不可抗力范围]`”的列举不够全面"
+      ]
+    },
+    {
+      "name": "LegalRisk",
+      "cn_name": "法律风险",
+      "description": "因法律规定不明确、合同约定有瑕疵或外部事件导致的权利受损、义务加重或产生争议的可能性。",
+      "confidence": 1.0,
+      "evidence": [
+        "**审查目的：** `[例如：评估法律风险、确认技术可行性、检查格式规范性等]`",
+        "### **3.1 主要问题与风险提示**",
+        "存在未来产生争议的风险。"
+      ]
+    },
+    {
+      "name": "IntellectualProperty",
+      "cn_name": "知识产权",
+      "description": "在智力活动中创造的成果所依法享有的专有权利，如著作权、专利权、商标权等。",
+      "confidence": 1.0,
+      "evidence": [
+        "**知识产权归属风险**",
+        "文件中对项目实施过程中产生的`[具体描述，如：背景知识产权、前景知识产权]`的归属和使用许可约定不清晰"
+      ]
+    },
+    {
+      "name": "LegalBasis",
+      "cn_name": "法律依据",
+      "description": "进行审查、判断或提出意见时所依据的法律、法规、标准或内部规定。",
+      "confidence": 1.0,
+      "evidence": [
+        "**审查依据：** `[例如：国家相关法律法规、公司内部管理制度、行业技术标准等]`",
+        "建议参照《民法典》相关规定进行补充和完善。"
+      ]
+    },
+    {
+      "name": "SignatoryPage",
+      "cn_name": "签章页",
+      "description": "合同或法律文书中预留供各方当事人签字、盖章以确认其效力并使其生效的页面。",
+      "confidence": 1.0,
+      "evidence": [
+        "| 签章页 | ☑ 已预留 / ☐ 未预留 | — |"
+      ]
+    },
+    {
+      "name": "SubjectInformation",
+      "cn_name": "主体信息",
+      "description": "合同或法律文书中涉及的各方当事人（如甲方、乙方）的基本身份信息，包括名称、地址、联系人等。",
+      "confidence": 1.0,
+      "evidence": [
+        "| 各方主体信息（名称、地址、联系人） | ☑ 完整 / ☐ 缺失 | 缺失法定代表人信息 |"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "name": "identifiesRiskIn",
+      "cn_name": "在...中识别风险",
+      "source": "ReviewOpinion",
+      "target": "ReviewedDocument",
+      "description": "审查意见书的核心功能是分析和识别被审查文件中存在的法律风险。",
+      "confidence": 1.0,
+      "evidence": [
+        "## **三、 具体审查意见**",
+        "### **3.1 主要问题与风险提示**"
+      ]
+    },
+    {
+      "name": "containsClause",
+      "cn_name": "包含条款",
+      "source": "ReviewedDocument",
+      "target": "ContractClause",
+      "description": "被审查的文件（如合同）由多个具体的条款构成。",
+      "confidence": 1.0,
+      "evidence": [
+        "**第X条【条款标题】** 中",
+        "**第Y条【条款标题】** 中"
+      ]
+    },
+    {
+      "name": "posesRisk",
+      "cn_name": "构成风险",
+      "source": "ContractClause",
+      "target": "LegalRisk",
+      "description": "合同中不明确、不对等或有缺陷的条款是法律风险的主要来源。",
+      "confidence": 1.0,
+      "evidence": [
+        "关于“`[具体描述，如：交付标准]`”的约定较为模糊...存在未来产生争议的风险。",
+        "双方在`[具体描述，如：违约责任]`方面的约定不对等。"
+      ]
+    },
+    {
+      "name": "governsOwnershipOf",
+      "cn_name": "规定...的归属",
+      "source": "ContractClause",
+      "target": "IntellectualProperty",
+      "description": "合同中的知识产权条款专门用于约定相关智力成果的权利归属和使用许可。",
+      "confidence": 1.0,
+      "evidence": [
+        "**知识产权归属风险**",
+        "文件中对项目实施过程中产生的`[具体描述，如：背景知识产权、前景知识产权]`的归属和使用许可约定不清晰"
+      ]
+    },
+    {
+      "name": "basedOn",
+      "cn_name": "基于",
+      "source": "ReviewOpinion",
+      "target": "LegalBasis",
+      "description": "审查意见的提出需要依据相关的法律法规或标准。",
+      "confidence": 1.0,
+      "evidence": [
+        "**审查依据：** `[例如：国家相关法律法规、公司内部管理制度、行业技术标准等]`",
+        "建议参照《民法典》相关规定进行补充和完善。"
+      ]
+    },
+    {
+      "name": "hasPart",
+      "cn_name": "包含部分",
+      "source": "ReviewedDocument",
+      "target": "SignatoryPage",
+      "description": "签章页是合同文件不可或缺的组成部分，用于完成生效程序。",
+      "confidence": 1.0,
+      "evidence": [
+        "| 签章页 | ☑ 已预留 / ☐ 未预留 | — |"
+      ]
+    },
+    {
+      "name": "describes",
+      "cn_name": "描述",
+      "source": "ReviewedDocument",
+      "target": "SubjectInformation",
+      "description": "合同文件开头部分会明确记载各方当事人的主体信息。",
+      "confidence": 1.0,
+      "evidence": [
+        "| 各方主体信息（名称、地址、联系人） | ☑ 完整 / ☐ 缺失 | 缺失法定代表人信息 |"
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "name": "documentNumber",
+      "cn_name": "文件编号",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "20251214_192629",
+      "description": "审查意见书的唯一标识编号，通常包含日期和序列信息。"
+    },
+    {
+      "name": "reviewDate",
+      "cn_name": "出具日期",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "[年]年[月]月[日]日",
+      "description": "审查意见书正式出具的日期。"
+    },
+    {
+      "name": "reviewer",
+      "cn_name": "审查部门/人",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "法务部、张三律师",
+      "description": "出具审查意见的部门或个人。"
+    },
+    {
+      "name": "reviewPurpose",
+      "cn_name": "审查目的",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "评估法律风险",
+      "description": "本次审查的主要目标和意图。"
+    },
+    {
+      "name": "clauseTitle",
+      "cn_name": "条款标题",
+      "entity": "ContractClause",
+      "data_type": "Text",
+      "example": "交付标准、违约责任",
+      "description": "用于概括条款核心内容的简短标题。"
+    },
+    {
+      "name": "clauseContent",
+      "cn_name": "条款内容",
+      "entity": "ContractClause",
+      "data_type": "Text",
+      "example": "甲方应在收到全部款项后10个工作日内交付最终成果。",
+      "description": "条款的具体文字描述，规定了具体的权利义务。"
+    },
+    {
+      "name": "riskDescription",
+      "cn_name": "风险描述",
+      "entity": "LegalRisk",
+      "data_type": "Text",
+      "example": "约定模糊导致未来产生争议",
+      "description": "对风险具体表现和可能后果的文字说明。"
+    },
+    {
+      "name": "ipType",
+      "cn_name": "知识产权类型",
+      "entity": "IntellectualProperty",
+      "data_type": "Text",
+      "example": "背景知识产权、前景知识产权",
+      "description": "所涉及知识产权的具体类别。"
+    },
+    {
+      "name": "basisName",
+      "cn_name": "依据名称",
+      "entity": "LegalBasis",
+      "data_type": "Text",
+      "example": "《民法典》",
+      "description": "所依据的法律法规或标准的名称。"
+    },
+    {
+      "name": "subjectName",
+      "cn_name": "主体名称",
+      "entity": "SubjectInformation",
+      "data_type": "Text",
+      "example": "XX科技有限公司",
+      "description": "合同当事人的法定名称或姓名。"
+    },
+    {
+      "name": "subjectAddress",
+      "cn_name": "主体地址",
+      "entity": "SubjectInformation",
+      "data_type": "Text",
+      "example": "XX市XX区XX路XX号",
+      "description": "合同当事人的法定地址或主要营业地。"
+    }
+  ],
+  "inferred_entities": [
+    {
+      "name": "ContractParty",
+      "reason": "文档中反复提及“双方”、“我方”、“对方”，并检查“各方主体信息”，这明确指向了合同的签约主体。虽然“主体信息”实体描述了其静态属性，但“合同当事人”作为一个独立的实体，更能体现其在合同关系中的动态角色（如履行义务、主张权利）。",
+      "suggestion": "在完整的合同文本中，通常有明确的“甲方”、“乙方”定义章节，可以从中提取“ContractParty”实体，并关联其具体的权利、义务和行为。"
+    },
+    {
+      "name": "Obligation",
+      "reason": "文档在“权利义务对等问题”和具体条款审查中，隐含了对各方“义务”的审查，如“交付”、“付款”、“提供配合条件”。义务是合同条款的核心内容之一，与权利相对应。",
+      "suggestion": "分析具体的合同条款文本，可以提取出“支付货款义务”、“交付成果义务”、“保密义务”等具体的义务实体，并关联其履行主体、履行期限和履行标准。"
+    },
+    {
+      "name": "Liability",
+      "reason": "文档专门提到了“违约责任”，这是合同法律关系的核心概念之一，指当事人不履行合同义务或履行不符合约定时应承担的法律后果。它不同于一般的“法律风险”，是一个更具体、有明确法律规定的实体。",
+      "suggestion": "在合同文本的“违约责任”章节，可以提取违约金计算方式、赔偿范围、免责事由等具体属性，构成“Liability”实体。"
+    }
+  ],
+  "inferred_relations": [
+    {
+      "name": "hasObligation",
+      "source": "ContractParty",
+      "target": "Obligation",
+      "reason": "合同当事人是合同义务的承担者。文档中“双方在违约责任方面的约定不对等”的表述，直接暗示了“甲方有交付义务”、“乙方有付款义务”这样的关系。",
+      "suggestion": "通过自然语言处理或人工标注，在合同条款中识别出义务描述句（如“甲方应...”），并链接到该句的主语（合同当事人）和宾语（义务内容），即可确认此关系。"
+    },
+    {
+      "name": "triggers",
+      "source": "Obligation",
+      "target": "Liability",
+      "reason": "违反合同义务是触发违约责任的前提。文档将“违约责任”作为“权利义务对等”问题的一部分进行讨论，逻辑上建立了“义务未履行”导致“责任产生”的链条。",
+      "suggestion": "在合同文本中，通常在定义完义务后，会在“违约责任”章节规定违反该义务的后果。通过分析条款间的引用和逻辑结构，可以建立“违反X义务，则承担Y责任”的关系。"
+    },
+    {
+      "name": "signs",
+      "source": "ContractParty",
+      "target": "ReviewedDocument",
+      "reason": "合同最终需要由各方当事人签署（在签章页上）才能生效。文档检查“签章页”的完整性，其根本目的是确保各方当事人能完成签署行为，从而使文件产生法律约束力。",
+      "suggestion": "在合同签署流程数据或最终版本文件中，记录每个签署方的签名/盖章动作和时间，即可实例化此关系。"
+    }
+  ],
+  "confidence": 0.98,
+  "document_summary": "本文档是一份合同审查意见书的模板，展示了法律专业人士审查合同或法律文书时的标准流程和关注要点。文档详细说明了审查的基本情况、总体评价、具体审查意见（包括主要风险、格式问题和信息完整性）、修改建议以及最终结论。它突出了对条款明确性、权利义务对等、知识产权归属等关键法律风险的识别，并提供了基于《民法典》等法律依据的具体修改指导。"
+}

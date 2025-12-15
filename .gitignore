@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual env
+.env
+.venv
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# json
+model_configs.json
+
+# Gradio / 本地运行缓存
+logs/
+*.log
+cache/

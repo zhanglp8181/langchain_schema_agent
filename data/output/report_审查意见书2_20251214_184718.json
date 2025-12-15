@@ -1,0 +1,317 @@
+{
+  "domain": "法律",
+  "sub_domain": "合同审查与法律合规",
+  "keywords": [
+    "审查意见书",
+    "合法性",
+    "合规性",
+    "权利义务",
+    "违约责任",
+    "民法典",
+    "法律法规",
+    "风险分析",
+    "修改建议",
+    "主体资格",
+    "商业条款",
+    "知识产权"
+  ],
+  "entities": [
+    {
+      "name": "ReviewOpinion",
+      "cn_name": "审查意见书",
+      "description": "一份正式的法律文件，用于系统性地分析和评估特定合同或法律文件的合法性、合规性、风险及商业合理性，并提出修改建议。",
+      "confidence": 1.0,
+      "evidence": [
+        "# 关于《[项目/文件名称]》的审查意见书",
+        "## 二、 总体审查意见",
+        "## 三、 具体审查意见及修改建议"
+      ]
+    },
+    {
+      "name": "LegalDocument",
+      "cn_name": "被审查法律文件",
+      "description": "接受审查的目标文件，通常是合同、协议或其他具有法律约束力的文书。",
+      "confidence": 1.0,
+      "evidence": [
+        "**送审文件名称** | [填写被审查文件的全称]"
+      ]
+    },
+    {
+      "name": "ReviewBasis",
+      "cn_name": "审查依据",
+      "description": "进行审查时所依据的法律法规、内部制度、行业标准等规范性文件集合。",
+      "confidence": 1.0,
+      "evidence": [
+        "**审查依据** | 1. 国家相关法律法规及政策<br>2. 公司内部规章制度<br>3. 行业标准与最佳实践<br>4. 项目相关协议与约定"
+      ]
+    },
+    {
+      "name": "LegalProvision",
+      "cn_name": "法律条款",
+      "description": "被审查文件中具体的、约定各方权利义务的条文或段落。",
+      "confidence": 1.0,
+      "evidence": [
+        "*意见：第X条关于“[某条款内容]”的约定...*",
+        "*问题：第Y条中“及时提供”表述模糊...*"
+      ]
+    },
+    {
+      "name": "ContractParty",
+      "cn_name": "合同当事人",
+      "description": "签订合同的各方主体，包括自然人、法人或非法人组织。",
+      "confidence": 1.0,
+      "evidence": [
+        "**主体资格**：文件各方当事人的身份信息、资质证明是否齐全、有效。"
+      ]
+    },
+    {
+      "name": "IntellectualProperty",
+      "cn_name": "知识产权",
+      "description": "在合同履行过程中涉及或产生的智力成果权，包括背景知识产权和前景知识产权。",
+      "confidence": 1.0,
+      "evidence": [
+        "**知识产权** | 未约定背景知识产权与前景知识产权的归属。",
+        "增加条款，明确背景知识产权归属各方，本项目产生的前景知识产权归属..."
+      ]
+    },
+    {
+      "name": "Risk",
+      "cn_name": "风险",
+      "description": "因合同条款不明确、不合法或不公平而可能导致的不利后果或损失的可能性。",
+      "confidence": 1.0,
+      "evidence": [
+        "## 四、 风险提示与后续建议",
+        "**高风险**：上述 **第3.2节第2点（违约金）** 及 **第3.3节（知识产权归属）** 所述问题，若不予修改，可能在发生争议时导致我方重大利益损失。"
+      ]
+    },
+    {
+      "name": "ModificationSuggestion",
+      "cn_name": "修改建议",
+      "description": "针对审查发现的问题，提出的具体、可操作的条款修改方案或文本调整意见。",
+      "confidence": 1.0,
+      "evidence": [
+        "*建议：修改为“应在收到甲方书面通知后【5】个工作日内提供”。*",
+        "**修改建议** | 建议改为分期付款..."
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "name": "reviews",
+      "cn_name": "审查",
+      "source": "ReviewOpinion",
+      "target": "LegalDocument",
+      "description": "审查意见书对被审查的法律文件进行分析和评估。",
+      "confidence": 1.0,
+      "evidence": [
+        "关于《[项目/文件名称]》的审查意见书",
+        "经审查，本审查人认为《[项目/文件名称]》..."
+      ]
+    },
+    {
+      "name": "basedOn",
+      "cn_name": "依据",
+      "source": "ReviewOpinion",
+      "target": "ReviewBasis",
+      "description": "审查意见书的形成依赖于特定的法律法规、标准等依据。",
+      "confidence": 1.0,
+      "evidence": [
+        "**审查依据** | 1. 国家相关法律法规及政策..."
+      ]
+    },
+    {
+      "name": "contains",
+      "cn_name": "包含",
+      "source": "LegalDocument",
+      "target": "LegalProvision",
+      "description": "被审查的法律文件由多个具体的法律条款组成。",
+      "confidence": 1.0,
+      "evidence": [
+        "第X条关于...",
+        "第Y条中..."
+      ]
+    },
+    {
+      "name": "signs",
+      "cn_name": "签署",
+      "source": "ContractParty",
+      "target": "LegalDocument",
+      "description": "合同当事人是签署并受被审查法律文件约束的主体。",
+      "confidence": 1.0,
+      "evidence": [
+        "文件各方当事人"
+      ]
+    },
+    {
+      "name": "involves",
+      "cn_name": "涉及",
+      "source": "LegalDocument",
+      "target": "IntellectualProperty",
+      "description": "被审查的法律文件的内容涉及知识产权的约定。",
+      "confidence": 1.0,
+      "evidence": [
+        "**知识产权** | 未约定背景知识产权与前景知识产权的归属。"
+      ]
+    },
+    {
+      "name": "identifies",
+      "cn_name": "识别",
+      "source": "ReviewOpinion",
+      "target": "Risk",
+      "description": "审查意见书的核心功能之一是识别法律文件中存在的各类风险。",
+      "confidence": 1.0,
+      "evidence": [
+        "## 四、 风险提示与后续建议",
+        "**高风险**：..."
+      ]
+    },
+    {
+      "name": "proposesFor",
+      "cn_name": "为...提出",
+      "source": "ModificationSuggestion",
+      "target": "LegalProvision",
+      "description": "修改建议是针对特定法律条款存在的问题而提出的。",
+      "confidence": 1.0,
+      "evidence": [
+        "*问题：第Y条中...* *建议：修改为...*",
+        "| **条款项** | ... | **修改建议** |"
+      ]
+    },
+    {
+      "name": "mitigates",
+      "cn_name": "缓解",
+      "source": "ModificationSuggestion",
+      "target": "Risk",
+      "description": "采纳修改建议可以缓解或消除对应的法律或商业风险。",
+      "confidence": 0.9,
+      "evidence": [
+        "**必须修改项**：针对**第四条第4.1款中的高风险项**，建议...务必在签署前完成修改。"
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "name": "reviewNumber",
+      "cn_name": "审查编号",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "20251214_184420",
+      "description": "审查意见书的唯一标识编号。"
+    },
+    {
+      "name": "issueDate",
+      "cn_name": "出具日期",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "[年]年[月]月[日]日",
+      "description": "审查意见书正式出具的日期。"
+    },
+    {
+      "name": "overallConclusion",
+      "cn_name": "总体结论",
+      "entity": "ReviewOpinion",
+      "data_type": "Text",
+      "example": "原则通过，但需按本意见修改后签署/执行。",
+      "description": "对文件审查结果的概括性定论，如通过、原则通过等。"
+    },
+    {
+      "name": "documentName",
+      "cn_name": "文件名称",
+      "entity": "LegalDocument",
+      "data_type": "Text",
+      "example": "[填写被审查文件的全称]",
+      "description": "被审查法律文件的完整名称。"
+    },
+    {
+      "name": "documentVersion",
+      "cn_name": "文件版本",
+      "entity": "LegalDocument",
+      "data_type": "Text",
+      "example": "V2.0",
+      "description": "被审查法律文件的版本号。"
+    },
+    {
+      "name": "clauseNumber",
+      "cn_name": "条款序号",
+      "entity": "LegalProvision",
+      "data_type": "Text",
+      "example": "第X条",
+      "description": "法律条款在文件中的编号或位置标识。"
+    },
+    {
+      "name": "clauseContent",
+      "cn_name": "条款内容",
+      "entity": "LegalProvision",
+      "data_type": "Text",
+      "example": "“及时提供”",
+      "description": "法律条款的具体文字表述。"
+    },
+    {
+      "name": "partyName",
+      "cn_name": "当事人名称",
+      "entity": "ContractParty",
+      "data_type": "Text",
+      "example": "[送审单位/部门]",
+      "description": "合同当事人的法定名称或常用名称。"
+    },
+    {
+      "name": "riskLevel",
+      "cn_name": "风险等级",
+      "entity": "Risk",
+      "data_type": "Text",
+      "example": "高风险",
+      "description": "对风险严重程度的定性评估，如高、中、低。"
+    },
+    {
+      "name": "suggestionContent",
+      "cn_name": "建议内容",
+      "entity": "ModificationSuggestion",
+      "data_type": "Text",
+      "example": "应在收到甲方书面通知后【5】个工作日内提供",
+      "description": "修改建议的具体文本内容。"
+    }
+  ],
+  "inferred_entities": [
+    {
+      "name": "ApplicableLaw",
+      "reason": "文档多次提及“《民法典》”、“《[相关行业法]》”、“国家相关法律法规”作为审查依据和合规性判断标准，它们是独立于审查意见书和被审查文件之外的规范性实体。",
+      "suggestion": "在审查依据部分或具体意见中，明确列出所引用的具体法律名称及条款号，如“《中华人民共和国民法典》第五百六十三条”。"
+    },
+    {
+      "name": "Reviewer",
+      "reason": "文档有“审查人”字段和签字栏，审查人是出具意见书的主体，拥有专业资格，是独立于“审查意见书”这个文档本身的实体。",
+      "suggestion": "在“审查人”字段补充具体姓名、职务或资质（如律师执业证号），使其成为一个明确的实体。"
+    },
+    {
+      "name": "Attachment",
+      "reason": "文档在建议中提及“在附件中明确收录”、“作为合同附件”，附件（如营业执照、技术规格书）是合同或审查意见的组成部分，具有独立的内容和形式。",
+      "suggestion": "在文档中明确列出所有附件的标题和编号，或在单独的章节描述附件内容。"
+    }
+  ],
+  "inferred_relations": [
+    {
+      "name": "violates",
+      "source": "LegalProvision",
+      "target": "ApplicableLaw",
+      "reason": "审查意见中指出某些条款“可能与《[法律名称]》第X条规定存在冲突”，这暗示了条款内容违反了具体的法律规定。",
+      "suggestion": "在具体审查意见中，明确表述为“该条款违反了《XX法》第X条关于……的规定”，从而建立明确的违反关系。"
+    },
+    {
+      "name": "belongsTo",
+      "source": "IntellectualProperty",
+      "target": "ContractParty",
+      "reason": "文档讨论“背景知识产权归属各方”和“前景知识产权归属”，这必然涉及到知识产权与特定合同当事人之间的权属关系。",
+      "suggestion": "在修改建议或新增条款中，明确表述“本协议项下产生的A知识产权归甲方所有，B知识产权归乙方所有”。"
+    },
+    {
+      "name": "issuedBy",
+      "cn_name": "由...出具",
+      "source": "ReviewOpinion",
+      "target": "Reviewer",
+      "reason": "审查意见书由具体的审查人（或部门）编制并签字，存在明确的创作和权责关系。",
+      "suggestion": "强化“审查人”与“审查意见书”之间的归属关系描述，例如“本意见书由[审查人姓名]基于其专业判断独立出具”。"
+    }
+  ],
+  "confidence": 0.98,
+  "document_summary": "本文档是一份结构化的合同审查意见书模板，用于系统化评估法律文件的合规性与风险。它涵盖了审查基本情况、总体意见、具体审查（包括合法性、权利义务、商业条款和文本规范性）、风险提示及后续建议。核心审查维度包括主体资格、内容合规性、权利义务对等性、违约责任、知识产权归属等关键法律概念，旨在识别风险并提供具体的修改建议与谈判策略。"
+}
